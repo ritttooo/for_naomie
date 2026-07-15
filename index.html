@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>For Naomie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #12213B;
+    --navy-deep: #0B1626;
+    --cream: #F6F1E7;
+    --gold: #C9A24B;
+    --rose: #D6837F;
+    --stub-line: rgba(246,241,231,0.35);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background: radial-gradient(ellipse at 50% 0%, #1a2f52 0%, var(--rose) 80%, var(--navy) 100%);
+    color: var(--cream);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    position: fixed;
+    inset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  .stage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6vh 6vw;
+    position: relative;
+  }
+
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .card {
+    background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    border: 1px solid rgba(246,241,231,0.22);
+    border-radius: 6px;
+    padding: 2.6rem 2rem 1.8rem;
+    max-width: 420px;
+    width: 100%;
+    min-height: 320px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    outline: none;
+    transform: rotate(-0.6deg);
+  }
+
+  .card:focus-visible {
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65), 0 0 0 3px var(--gold);
+  }
+
+  .card-body {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .card-body.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.3rem;
+  }
+
+  .scoreline {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.55rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    line-height: 1;
+    flex-wrap: wrap;
+  }
+
+  .team { font-size: 1.05rem; letter-spacing: 0.05em; }
+  .score { font-size: 2.3rem; color: var(--gold); }
+  .dash { font-size: 1.3rem; color: var(--stub-line); }
+
+  .venue {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(246,241,231,0.72);
+    margin-top: 0.9rem;
+  }
+
+  .perf {
+    margin: 1.3rem 0 1rem;
+    height: 0;
+    border-top: 1px dashed var(--stub-line);
+    position: relative;
+  }
+  .perf::before, .perf::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--navy-deep);
+    border: 1px solid rgba(246,241,231,0.22);
+  }
+  .perf::before { left: -2.6rem; }
+  .perf::after  { right: -2.6rem; }
+
+  .minutes {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: rgba(246,241,231,0.55);
+  }
+
+  .salutation {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.9rem;
+    margin: 0 0 1rem;
+    color: var(--cream);
+  }
+
+  .card-body p {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin: 0 0 1rem;
+    color: rgba(246,241,231,0.92);
+  }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .accent {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--rose);
+  }
+
+  .comfort {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin: 0.3rem 0;
+  }
+  .comfort-line .phrase {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--cream);
+    display: block;
+  }
+  .comfort-line .gloss {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(246,241,231,0.5);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .distance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    margin: 0 0 1.3rem;
+  }
+  .dot-marker { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .dotted-path {
+    flex: 1;
+    max-width: 90px;
+    height: 1px;
+    background-image: repeating-linear-gradient(to right, rgba(246,241,231,0.4) 0, rgba(246,241,231,0.4) 4px, transparent 4px, transparent 9px);
+  }
+
+  .sign-off {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(246,241,231,0.55);
+  }
+  .sign-off span {
+    display: block;
+    margin-top: 0.35rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--gold);
+    letter-spacing: 0;
+  }
+
+  .card-footer {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .progress {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .progress .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(246,241,231,0.25);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .progress .dot.active {
+    background: var(--gold);
+    transform: scale(1.3);
+  }
+
+  .hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246,241,231,0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  .hint svg { width: 11px; height: 11px; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.85; }
+  }
+
+  .flag {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+.flag-top {
+  top: calc(env(safe-area-inset-top, 0px) + 1.1rem);
+}
+
+.flag-bottom {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1.1rem);
+}
+
+.letter-buttons {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1.4rem 0 0.6rem;
+}
+
+.letter-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(246,241,231,0.35);
+  background: rgba(255,255,255,0.05);
+  color: var(--cream);
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+.letter-btn:hover { border-color: var(--gold); }
+.letter-btn:active { transform: scale(0.92); }
+.letter-btn:disabled { opacity: 0.35; cursor: default; }
+
+.present-reveal {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  min-height: 1.6rem;
+  margin-top: 0.5rem;
+}
+
+.confirm-note {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-style: normal;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(246,241,231,0.5);
+  margin-top: 0.35rem;
+}
+</style>
+</head>
+<body>
+
+<div class="flag flag-top" aria-label="France">🇫🇷</div>
+<div class="flag flag-bottom" aria-label="Taiwan">🇹🇼</div>
+
+<div class="stage">
+  <div class="card" id="card" role="button" tabindex="0" aria-label="Tap to continue">
+    <div class="card-body visible" id="cardBody"></div>
+    <div class="card-footer">
+      <div class="progress" id="progress"></div>
+      <div class="hint" id="hint">
+        <span id="hintText">tap to continue</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="audioKylian" src="kylian.mp3" preload="auto"></audio>
+<audio id="audioJmetire" src="jmetire.mp3" preload="auto"></audio>
+<audio id="audioRemenez" src="remenez.mp3" preload="auto"></audio>
+<audio id="audioSandstorm" src="sandstorm.mp3" preload="auto"></audio>
+<audio id="audioTerimerikahani" src="terimerikahani.mp3" preload="auto"></audio>
+
+<script>
+  const steps = [
+    `<h1 class="salutation">Naomie </h1>
+    <p> press anywhere to start, its not v complicated </p>`,
+
+    `<p> i made this little website thingy for fun and for you to maybe make u feel a bit better about les bleus losing </p>
+    <p> basically just tap to open the next slide - i hope you like it :) </p>
+    <p> also volume on for a better experience </p>`,
+
+
+    `<p> ik that i always say that "oh but you're just a vibes girl... only interested in football to be performative" blah blah blah, but ik that you like the sport and you enjoy being able to take part in the fun </p>
+    <p> and trust me ik when sports is just sad sans raison and you acc feel like crying </p>
+    <p> 3 most noticable sports 'cries' in my life: 1. March 31 2026 (Poland didnt qualify for WC) 2. June 30 2016 (Poland lost to Portugal on pens in euros qf) 3. March 26 2015 (India lost to Australia in cricket WC semis) </p>`,
+
+    `<p> but also, </p>
+    <h1>FRANCE WAS AWESOME </h1>
+    <p>France scored SIXTEEN goals in SIX matches!</p>
+     <p>and Spain was vvvvvv good</p>
+     <p>one game doesn't undo a tournament like that and nor should it diminish the fun memories of french summer in a wc year</p>`,
+
+    `<div class="comfort">
+
+       <div class="comfort-line">
+        <p> i hope i got the right language here </p>
+         <span class="phrase">而且你现在在台湾耶，真为你感到兴奋！</span>
+         <span class="gloss">if this is wrong lmk s'il vous plait</span>
+       </div>
+     </div>`,
+
+    `<p>on the bright side, you are gonna have so much fun munching on all the good stuff and you better keep sending me pics</p>
+     <p>so, this is a very small, very unnecessary website that i thought id make to say: it's going to be fine, France is still good, Kylian is still the diktator, and i think that next time we have to watch together so you come out knowing more than just kylian, olise, and dembele.</p>
+     <div class="distance">
+       <span class="dot-marker"></span>
+       <span class="dotted-path"></span>
+       <span class="dot-marker"></span>
+     </div>
+     <div class="sign-off">from <span>ritto</span></div>
+     <p style="margin-top: 1.4rem;">now comes the part where you get a present.</p>
+     <p>pick any letter to reveal it:</p>
+     <div class="letter-buttons">
+       <button class="letter-btn" data-letter="V">V</button>
+       <button class="letter-btn" data-letter="T">T</button>
+       <button class="letter-btn" data-letter="S">S</button>
+     </div>
+     <div class="present-reveal" id="presentReveal"></div>`,
+
+     `<p>p.s. this is a blessing in disguise coz u can finally get some sleep and fix that body clock</p>
+     <p> also this is my favourite indian song (i love a bollywood lovey dovey tune)</p>
+     <p> bizous and all that french stuffs </p>`,
+    
+  ];
+
+  // Map of slide index (zero-indexed) -> audio element.
+  // Slide 1 (steps[1]) is "special kind of cruel", etc.
+  const slideAudioMap = {
+    2: { el: document.getElementById('audioKylian'), start: 0 },          // Kylian dictator track
+    4: { el: document.getElementById('audioJmetire'), start: 20},         // slide 6 placeholder
+    3: { el: document.getElementById('audioRemenez'), start: 60},         // slide 7 placeholder
+    5: { el: document.getElementById('audioSandstorm'), start: 50},      // slide 8 placeholder
+    6: { el: document.getElementById('audioTerimerikahani'), start: 43}, // slide 9 placeholder
+  };
+
+  let index = 0;
+  const card = document.getElementById('card');
+  const cardBody = document.getElementById('cardBody');
+  const progress = document.getElementById('progress');
+  const hintText = document.getElementById('hintText');
+
+  function syncAudio() {
+    Object.values(slideAudioMap).forEach(track => {
+      track.el.pause();
+      track.el.currentTime = 0;
+    });
+    const track = slideAudioMap[index];
+    if (track) {
+      track.el.currentTime = track.start;
+      track.el.play().catch(() => {});
+    }
+  }
+
+  function buildProgress() {
+    progress.innerHTML = steps.map((_, i) =>
+      `<span class="dot${i === index ? ' active' : ''}"></span>`
+    ).join('');
+  }
+
+  function render(initial) {
+    cardBody.innerHTML = steps[index];
+    buildProgress();
+    hintText.textContent = index === steps.length - 1 ? 'tap to start again' : 'tap to continue';
+    if (!initial) {
+      requestAnimationFrame(() => cardBody.classList.add('visible'));
+    }
+  }
+
+  function advance() {
+    index = (index + 1) % steps.length;
+    syncAudio();
+    cardBody.classList.remove('visible');
+    setTimeout(() => {
+      render(false);
+    }, 220);
+  }
+
+  card.addEventListener('click', advance);
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      advance();
+    }
+  });
+
+  // --- present picker ---
+  const presents = {
+    V: 'Congrats, your present is 1000 VND!',
+    T: 'Congrats, your present is 10 TWD!',
+    S: 'Congrats, your present is 1 SGD!'
+  };
+
+  function sendPickEmail(letter) {
+    fetch('https://formspree.io/f/xbdnleko', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _replyto: 'abdvritvijroy@gmail.com',
+        message: `Naomie picked letter ${letter}`
+      })
+    }).catch(() => {});
+  }
+
+  cardBody.addEventListener('click', (e) => {
+    const btn = e.target.closest('.letter-btn');
+    if (!btn) return;
+    e.stopPropagation(); // don't advance the slide when picking a letter
+    const letter = btn.dataset.letter;
+    cardBody.querySelectorAll('.letter-btn').forEach(b => b.disabled = true);
+    const reveal = document.getElementById('presentReveal');
+    if (reveal) reveal.innerHTML = `${presents[letter]}<br><span class="confirm-note">dw i got an email w your request</span>`;
+    sendPickEmail(letter);
+  });
+
+  render(true);
+</script>
+
+</body>
+</html>

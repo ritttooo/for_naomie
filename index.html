@@ -25,6 +25,10 @@
     overscroll-behavior: none;
   }
 
+  html {
+    font-size: 87%;
+  }
+
   body {
     background: radial-gradient(ellipse at 50% 0%, #1a2f52 0%, var(--rose) 80%, var(--navy) 100%);
     color: var(--cream);
@@ -87,6 +91,9 @@
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.35s ease, transform 0.35s ease;
+    max-height: 62vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card-body.visible {
